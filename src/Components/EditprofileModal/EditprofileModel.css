@@ -1,0 +1,19 @@
+.infoForm > div > div > span{
+    padding-left: 25px;
+    margin-top: 10px;
+    font-weight: bold;
+
+}
+
+.infoForm > div > div > button {
+    position: absolute;
+    right: 20px;
+    margin-right: 0px;
+    width: 2.5rem;
+    height: 2rem;
+}
+
+.infoForm > div > div {
+    display: flex;
+    width: 90%;
+}

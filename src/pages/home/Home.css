@@ -1,0 +1,38 @@
+.Home{
+    display: grid;
+    grid-template-columns: 18rem auto 20rem;
+    gap: 1rem;
+    padding: 1rem 1rem;
+}
+
+@media (max-width:908px) {
+    .Home{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .leftside-div{
+        display: none;
+    }
+}
+
+@media (max-width:1024px) {
+    .Home{
+        grid-template-columns:10rem  auto;
+    }
+    .rightside-div{
+        display: none;
+    }
+}
+
+@media (max-width:1220px) {
+    .Home{
+        grid-template-columns: 15rem auto;
+    }
+}
+
+@media (max-width:1275px) {
+    .Home{
+        grid-template-columns: 17rem auto 17rem;
+    }
+}

@@ -1,0 +1,149 @@
+.Auth{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    gap: 4rem;
+    position: relative;
+}
+
+.Auth > div{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Left side */
+
+.a-left > img {
+    width: 4rem;
+    height: 4rem;
+}
+
+.Webname > h1 {
+    font-size: 3rem;
+    background-color: red;
+    background-image: var(--buttonBg);
+    background-size: 100%;
+    background-repeat: repeat;
+
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    -moz-background-clip: text;
+}
+
+.Webname > h6 {
+    font-size: 0.8rem;
+}
+
+.infoForm{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+}
+
+.infoinput{
+    border: none;
+    outline: none;
+    background-color: var(--inputColor);
+    border-radius: 8px;
+    padding: 20px;
+    flex:1;
+}
+
+.infoForm > div {
+    display: flex;
+    gap: 1rem;
+    height: 2rem;
+    width: 100%;
+
+}
+
+.info-Button{
+   width: 6rem;
+   height: 2rem;
+   align-self: flex-end;
+}
+
+.auth-form{
+    background-color: var(--cardColor);
+    border-radius: 1rem;
+    padding: 1rem;
+}
+
+.auth-form > div{
+   width:100% ;
+   align-items: center;
+   justify-content: center;
+   font-size: 12px;
+}
+
+.link:hover{
+    cursor: pointer;
+    color: #1f7bd3;
+}
+
+.Otp-reset-message{
+    font-weight: bold;
+    font-weight: 520;
+    max-width: 30rem;
+    padding: 1rem;
+    line-height: 2rem;
+}
+
+.error{
+    color: rgb(202, 0, 0);
+    font-weight: bold;
+}
+
+.no-error{
+
+    display: none;
+}
+
+.passwordstrength{
+   color: #1f7bd3; 
+}
+
+@media (max-width:1000px) {
+    .Auth{
+        display: flex;
+        flex-direction: column;
+    }
+    .a-left > img{
+        display: none;
+    }
+    .a-left > div{
+      display: none;
+    }
+}
+
+@media (max-width:480px) {
+    .infoForm{
+        width: 20rem;
+    }
+    .infoinput{
+        padding: 15px;
+        width: 5rem;
+    }
+    .infoForm{
+        gap: 1.3rem;
+    }
+}
+
+@media (max-width:375px) {
+    .infoForm{
+        width: 16rem;
+    }
+    .infoForm > h2{
+        font-size: 18px;
+    }
+    .infoForm > span{
+        font-size: 10px;
+    }
+    .Otp-reset-message{
+        line-height: 1rem;
+    }
+}

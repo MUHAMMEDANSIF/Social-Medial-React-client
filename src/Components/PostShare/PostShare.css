@@ -1,0 +1,177 @@
+.PostShare{
+    display: flex;
+    gap: 1rem;
+    background-color: var(--cardColor);
+    padding: 1rem;
+    border-radius: 1rem;
+}
+
+.PostShare > img{
+    border-radius: 50%;
+    width: 3rem;
+    height: 3rem;
+}
+
+.PostShare > div{
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+    gap:1rem;
+}
+
+.PostShare > div > input{
+    background-color: var(--inputColor);
+    border-radius: 10px;
+    padding: 10px;
+    font-size: 17px;
+    border: none;
+    outline: none;
+}
+
+.PostOptions{
+   display: flex;
+   justify-content: space-around;
+}
+
+.option{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+    border-radius: 10px;
+    font-size: 12px;
+}
+
+.option:hover{
+    cursor: pointer;
+}
+
+.PostOptions > div:nth-of-type(1){color: var(--photo);}
+.PostOptions > div:nth-of-type(2){color: var(--video);}
+.PostOptions > div:nth-of-type(3){color: var(--location);}
+.PostOptions > div:nth-of-type(4){color: var(--shedule);}
+
+.post-button{
+    padding: 5px;
+    padding-left: 20px;
+    padding-right: 20px;
+    height: 2.5rem;
+    font-size: 12px;
+    margin-top: 23px;
+}
+
+.PreviewImage{
+    position: relative;
+}
+
+.PreviewImage > svg{
+    position: absolute;
+    right: 1rem;
+    top: 0.5rem;
+    cursor: pointer;
+}
+
+.PreviewImage > img{
+    width: 100%;
+    max-height: 30rem;
+    object-fit: cover;
+    border-radius: 0.5rem;
+}
+
+.PostShareing{
+    gap: 1rem;
+    background-color: var(--cardColor);
+    padding: 1rem;
+    border-radius: 1rem;
+}
+
+.PostShareing > div {
+    margin: 20px;
+    color: var(--greay);
+}
+
+@media (max-width:635px) {
+    .PostShare > img{
+        width: 2rem;
+        height: 2rem;
+    }
+    .PostShare > div{
+        width: 70%;
+        gap:0.8rem;
+    }
+    .PostShare > div > input{
+        font-size: 15px;
+    }   
+    .option{
+        font-size: 8px;
+    }
+    .post-button{
+        height: 2rem;
+        font-size: 8px;
+        padding: 3px;
+    padding-left: 10px;
+    padding-right: 10px;
+    }
+    .PostOptions > div:nth-of-type(4){display: none;}
+}
+
+@media (max-width:635px) {
+    .PostShare > img{
+        width: 2rem;
+        height: 2rem;
+    }
+    .PostShare > div{
+        width: 80%;
+        gap:0.8rem;
+    }
+    .option{
+        font-size: 8px;
+    }
+    .post-button{
+        height: 2rem;
+        font-size: 8px;
+        padding: 3px;
+    padding-left: 10px;
+    padding-right: 10px;
+    }
+    .PostOptions > div:nth-of-type(4){display: none;}
+    .PostOptions{
+        display: flex;
+        justify-content: space-between;
+    }
+    .PostShare > div > input{
+        font-size: 10px;
+        width: 100%;
+    }
+}
+
+@media (max-width:425px) {
+    .PostShare > img{
+        width: 2rem;
+        height: 2rem;
+    }
+    .PostShare > div{
+        width: 70%;
+        gap:0.5rem;
+    }
+    .PostShare > div > input{
+        font-size: 10px;
+    }   
+    .option{
+        font-size: 5px;
+    }
+    .post-button{
+        height: 2rem;
+        font-size: 8px;
+        padding: 3px;
+    padding-left: 10px;
+    padding-right: 10px;
+    }
+    .PostOptions > div:nth-of-type(3){display: none;}
+    .PostOptions{
+        display: flex;
+        justify-content: space-around;
+    }
+}

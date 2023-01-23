@@ -1,0 +1,29 @@
+.Profile{
+    position: relative;
+    display: grid;
+    grid-template-columns: 18rem auto 20rem;
+    gap: 1rem;
+    padding: 1rem 1rem;
+}
+.ProfileCenter{
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    height: 100vh;
+    overflow: auto;
+}
+
+@media (max-width:1295px) {
+    .Profile{
+        grid-template-columns: 18rem auto ;
+    }
+    .Profile-right{
+        display: none;
+    }
+}@media (max-width:908px) {
+    .Profile{
+       display: flex;
+       justify-content: center;
+       align-items: center;
+    }
+}

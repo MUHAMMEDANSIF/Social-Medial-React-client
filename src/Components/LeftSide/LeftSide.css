@@ -1,0 +1,14 @@
+.LeftSide{
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    align-items: center;
+    width:  100%;
+    overflow: hidden;
+}
+
+@media (max-width:908px) {
+    .LeftSide{
+        display: none;
+    }
+}

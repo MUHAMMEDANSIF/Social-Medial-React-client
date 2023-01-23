@@ -1,0 +1,93 @@
+.main {
+  height: 80vh;
+  overflow: auto;
+}
+
+.header {
+  padding: 3%;
+  font-size: 2rem;
+  text-align: center;
+  background-color: rgb(250, 250, 250);
+  border-bottom: 1px solid #ddd;
+}
+
+.title {
+  font-size: 0.8em;
+}
+
+.back-icon {
+  float: left;
+}
+
+.send-icon {
+  float: right;
+}
+
+.comment-body {
+  width: 100%;
+}
+
+.img-div {
+  width: 5rem;
+}
+
+.img {
+  width: 3rem;
+}
+
+.section > div:nth-child(1) {
+  padding: 3%;
+  width: 100%;
+  display: flex;
+}
+
+.reply > div:nth-child(1) {
+  padding: 3%;
+  width: 100%;
+  display: flex;
+}
+
+.reply {
+  width: 85%;
+  float: right;
+}
+
+.comments-body {
+  padding: 3%;
+  font-size: 1.1rem;
+}
+
+.name {
+  font-weight: bold;
+}
+
+.heart{
+  padding-top: 3%;
+  width: 20%;
+  text-align: center;
+}
+
+.heart > div {
+  cursor: pointer;
+}
+
+.muted {
+  padding-top: 3%;
+  font-size: 0.8em;
+  color: gray;
+}
+
+.muted > span {
+  margin-right: 5%;
+}
+
+.comment-box {
+    display: flex;
+    margin: 10px;
+}
+
+.comment-post {
+    width: 4rem;
+    height: 2.5rem;
+    margin-top: 5px;
+}

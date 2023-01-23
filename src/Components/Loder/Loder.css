@@ -1,0 +1,13 @@
+.loder{
+    height: 95vh;
+}
+.loder > div{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.loder > span {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
