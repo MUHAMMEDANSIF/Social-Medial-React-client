@@ -1,5 +1,5 @@
-import React, { Fragment, useState } from 'react';
-import { ToastContainer, toast } from 'react-toastify';
+import React, { useState } from 'react';
+import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import { Login as Loginapi } from '../../Api/Auth.Api';
 import ForgottenPass from './ForgottenPassword';
@@ -38,6 +38,7 @@ function Login({ state, setState }) {
         } else if (status.success) {
           setOtpSubmit(status.email);
         } else {
+          console.log(status);
           toast.error(status.error, toastoptions);
         }
       });
@@ -60,59 +61,56 @@ function Login({ state, setState }) {
     );
   }
   return (
-    <>
-      <div className="a-right">
-        {ForgottenPassword ? (
-          <ForgottenPass setForgotPassword={setForgotPassword} />
-        ) : (
-          <form
-            onSubmit={(event) => handlesubmit(event)}
-            className="infoForm auth-form"
-          >
-            <h2>Login</h2>
+    <div className="a-right">
+      {ForgottenPassword ? (
+        <ForgottenPass setForgotPassword={setForgotPassword} />
+      ) : (
+        <form
+          onSubmit={(event) => handlesubmit(event)}
+          className="infoForm auth-form"
+        >
+          <h2>Login</h2>
 
-            <div>
-              <input
-                type="text"
-                placeholder="User Name"
-                className="infoinput"
-                value={formdata.username}
-                onChange={(event) => handlechange(event)}
-                name="username"
-              />
+          <div>
+            <input
+              type="text"
+              placeholder="User Name"
+              className="infoinput"
+              value={formdata.username}
+              onChange={(event) => handlechange(event)}
+              name="username"
+            />
 
-              <input
-                type="password"
-                placeholder="Password"
-                className="infoinput"
-                value={formdata.password}
-                onChange={(event) => handlechange(event)}
-                name="password"
-              />
-            </div>
+            <input
+              type="password"
+              placeholder="Password"
+              className="infoinput"
+              value={formdata.password}
+              onChange={(event) => handlechange(event)}
+              name="password"
+            />
+          </div>
 
-            <div>
-              <span className="link" onClick={() => setForgotPassword(true)}>
-                Forgotten account?
+          <div>
+            <span className="link" onClick={() => setForgotPassword(true)}>
+              Forgotten account?
+            </span>
+          </div>
+          <div>
+            <span style={{ fontSize: '12px' }}>
+              If You dont t an account.
+              {' '}
+              <span className="link" onClick={() => setState(!state)}>
+                Signup
               </span>
-            </div>
-            <div>
-              <span style={{ fontSize: '12px' }}>
-                If You dont t an account.
-                {' '}
-                <span className="link" onClick={() => setState(!state)}>
-                  Signup
-                </span>
-              </span>
-            </div>
-            <button className="button info-Button" type="submit">
-              Login
-            </button>
-          </form>
-        )}
-      </div>
-      <ToastContainer />
-    </>
+            </span>
+          </div>
+          <button className="button info-Button" type="submit">
+            Login
+          </button>
+        </form>
+      )}
+    </div>
   );
 }
 
