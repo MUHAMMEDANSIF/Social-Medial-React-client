@@ -40,7 +40,6 @@
           "redux": "^4.2.0",
           "socket.io-client": "^4.5.4",
           "sweetalert": "^2.1.2",
-          "timeago": "^1.6.7",
           "timeago.js": "^4.0.0-beta.3",
           "web-vitals": "^2.1.4"
      },
