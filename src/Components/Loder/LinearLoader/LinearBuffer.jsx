@@ -2,22 +2,11 @@
 import React, { useRef, useState, useEffect } from 'react';
 import Box from '@mui/material/Box';
 import LinearProgress from '@mui/material/LinearProgress';
-import { useDispatch } from 'react-redux';
-import { toast } from 'react-toastify';
 
 function LinearBuffer({ Loader, setLoader }) {
   const [progress, setProgress] = useState(0);
   const [buffer, setBuffer] = useState(10);
   const [Color, setColor] = useState('primary');
-
-  const dispatch = useDispatch();
-
-  const toastoptions = {
-    position: 'bottom-left',
-    autoClose: 5000,
-    pauseOnHover: true,
-    draggable: true,
-  };
 
   const progressRef = useRef(() => {});
   useEffect(() => {
@@ -25,14 +14,7 @@ function LinearBuffer({ Loader, setLoader }) {
       if (progress >= 100) {
         if (Loader.status) {
           setColor('success');
-          toast.success('Post updated seccessfully', toastoptions);
-          setTimeout(() => {
-            setLoader(false);
-            dispatch({
-              type: 'posts-updated',
-              payload: Loader.response.posts,
-            });
-          }, 2000);
+          setLoader(false);
         }
       } else {
         const diff = Math.random() * 10;

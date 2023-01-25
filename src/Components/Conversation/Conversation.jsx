@@ -2,8 +2,17 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 
-function Conversation({ setcurrentchat }) {
+function Conversation({ setcurrentchat, onlineusers }) {
   const data = useSelector((state) => state.chatmembers);
+
+  const findonlineusers = (chat) => {
+    if (onlineusers) {
+      const status = onlineusers.find((element) => element.userId === chat.personid._id);
+      return !!status;
+    }
+    return false;
+  };
+
   if (!data) {
     return (
       <div>
@@ -16,12 +25,16 @@ function Conversation({ setcurrentchat }) {
       {data.chatsters.map((element) => (
         <div key={element._id}>
           <div className="follower conversation">
-            <div onClick={() => setcurrentchat(element.personid)}>
-              <div className="online-dot" />
+            <div onClick={() => setcurrentchat(element)}>
+              {
+                findonlineusers(element)
+                  ? <div className="online-dot" />
+                  : ''
+              }
               <img
                 src={
-                    element.profile
-                      ? element.profile.profileurl
+                    element.personid.profile
+                      ? element.personid.profile.profileurl
                       : process.env.REACT_APP_PROFILE_URL
                   }
                 alt=""

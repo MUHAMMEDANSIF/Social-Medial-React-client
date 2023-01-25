@@ -1,12 +1,12 @@
 /* eslint-disable no-underscore-dangle */
-import React, {
-  useState, useEffect,
-} from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 
 import './ChatBox.css';
 import InputEmoji from 'react-input-emoji';
 import { ToastContainer, toast } from 'react-toastify';
 import { format } from 'timeago.js';
+import Alert from '@mui/material/Alert';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { addnewmessage, getallmessage } from '../../Api/Chat.Api';
 
 function ChatBox({
@@ -17,6 +17,7 @@ function ChatBox({
 }) {
   const [newMessage, setNewMessages] = useState('');
   const [chats, setChats] = useState(null);
+  const [error, seterror] = useState(null);
 
   const toastoptions = {
     position: 'bottom-left',
@@ -25,22 +26,41 @@ function ChatBox({
     draggable: true,
   };
 
+  const messageEnd = useRef(null);
+
+  const handlescroll = () => {
+    messageEnd.current?.scrollIntoView({ behavior: 'smooth' });
+  };
   const handlesend = () => {
-    const data = {
-      senderId: currentUser._id,
-      receiverid: currentchat._id,
-      text: newMessage,
-    };
-    if (chats) setChats([...chats, data]);
-    else setChats([data]);
-    addnewmessage(data, (response) => {
-      if (response.success) {
-        setSendmessages(data);
-        setNewMessages('');
-      } else {
-        toast.error('message send not working', toastoptions);
-      }
-    });
+    if (newMessage.length > 0) {
+      seterror(null);
+      const data = {
+        senderId: currentUser._id,
+        receiverid: currentchat._id,
+        text: newMessage,
+      };
+      if (chats) setChats([...chats, data]);
+      else setChats([data]);
+      setTimeout(() => {
+        handlescroll();
+      }, 100);
+      addnewmessage(data, (response) => {
+        if (response.success) {
+          setSendmessages(data);
+          setNewMessages('');
+        } else {
+          toast.error('message send not working', toastoptions);
+          setTimeout(() => {
+            seterror(null);
+          }, 1000);
+        }
+      });
+    } else {
+      seterror('Please add somthing and try again');
+      setTimeout(() => {
+        seterror(null);
+      }, 1000);
+    }
   };
 
   const handlechange = (newMessages) => {
@@ -57,6 +77,9 @@ function ChatBox({
         getallmessage(data, (response) => {
           if (response.success) {
             setChats(response.message);
+            setTimeout(() => {
+              handlescroll();
+            }, 100);
           } else if (response.error) {
             toast.error(response.error, toastoptions);
           } else {
@@ -84,12 +107,15 @@ function ChatBox({
           <div className="chat-header">
             <div className="follower">
               <div>
+                <div className="back-icon">
+                  <ArrowBackIcon />
+                </div>
                 <img
                   src={
-                      currentchat.profile
-                        ? currentchat.profile.profileurl
-                        : process.env.REACT_APP_PROFILE_URL
-                    }
+                    currentchat.profile
+                      ? currentchat.profile.profileurl
+                      : process.env.REACT_APP_PROFILE_URL
+                  }
                   alt=""
                   className="followerImage"
                   style={{
@@ -115,21 +141,25 @@ function ChatBox({
           <div className="chat-body">
             {chats
               ? chats.map((message) => (
-                <div key={message._id} className={message.senderId === currentUser._id ? 'message own' : 'message'}>
+                <div
+                  key={message._id}
+                  className={
+                      message.senderId === currentUser._id
+                        ? 'message own'
+                        : 'message'
+                    }
+                >
                   <span>{message.text}</span>
                   <span>{format(message.createdAt)}</span>
                 </div>
               ))
-              : (
-                ''
-              )}
+              : ''}
+            <div style={{ padding: '2px' }} ref={messageEnd} />
+            {error ? <Alert severity="error">{error}</Alert> : ''}
           </div>
           <div className="chat-sender">
             <div>+</div>
-            <InputEmoji
-              value={newMessage}
-              onChange={(e) => handlechange(e)}
-            />
+            <InputEmoji value={newMessage} onChange={(e) => handlechange(e)} />
             <div className="send-button button" onClick={handlesend}>
               Send
             </div>

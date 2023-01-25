@@ -91,6 +91,8 @@ function PostShare({ setPostcount, Postscount }) {
             type: 'posts',
             payload: response.posts,
           });
+          setLoader(false);
+          toast.success('Post updated seccessfully', toastoptions);
         } else {
           toast.error(response.error, toastoptions);
         }

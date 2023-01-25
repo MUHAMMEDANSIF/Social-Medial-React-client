@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import './AllUsers.css';
 import { Loader } from '@mantine/core';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import { getAllUser, sendfollowrequest } from '../../Api/User.Api';
 import { addnewchat } from '../../Api/Chat.Api';
@@ -11,6 +11,7 @@ import { addnewchat } from '../../Api/Chat.Api';
 function AllUsers({ status }) {
   const [allusers, setAllUsers] = useState(null);
   const [loader, setLoader] = useState(null);
+  const [following, setFollowing] = useState(null);
 
   const toastoptions = {
     position: 'bottom-left',
@@ -23,6 +24,7 @@ function AllUsers({ status }) {
     getAllUser((response) => {
       if (response.success) {
         setAllUsers(response.AllUser);
+        setFollowing(response.following);
       } else {
         toast.error('some network error find please try agin', toastoptions);
       }
@@ -39,7 +41,11 @@ function AllUsers({ status }) {
             {status ? (
               <ChatList followers={followers} key={followers._id} />
             ) : (
-              <FollowersList followers={followers} key={followers._id} />
+              <FollowersList
+                followers={followers}
+                following={following}
+                key={followers._id}
+              />
             )}
           </div>
         ))
@@ -48,7 +54,8 @@ function AllUsers({ status }) {
   );
 }
 
-function FollowersList({ followers }) {
+function FollowersList({ followers, following }) {
+  const [remove, setRemove] = useState(false);
   const toastoptions = {
     position: 'bottom-left',
     autoClose: 5000,
@@ -58,14 +65,22 @@ function FollowersList({ followers }) {
 
   const handlefollow = () => {
     sendfollowrequest(followers._id, (response) => {
+      console.log(response);
       if (response.success) {
         toast.success('Your follow request send seccessfully', toastoptions);
+        setRemove(true);
       } else {
         toast.error('some network error find please try agin', toastoptions);
       }
     });
   };
-
+  const findfollowing = () => {
+    const status = following.find((user) => user.followerid === followers._id);
+    if (status) return true;
+    return false;
+  };
+  if (findfollowing()) return null;
+  if (remove) return null;
   return (
     <div className="Follower">
       <div>
@@ -84,17 +99,27 @@ function FollowersList({ followers }) {
             {' '}
             {followers.lastname}
           </span>
-          <span>@sample</span>
+          <span>
+            @
+            {followers.username}
+          </span>
         </div>
       </div>
 
-      <button onClick={() => handlefollow()} className="button followers-button">Follow</button>
+      <button
+        onClick={() => handlefollow()}
+        className="button followers-button"
+      >
+        Follow
+      </button>
     </div>
   );
 }
 
 function ChatList({ followers }) {
   const dispatch = useDispatch();
+  const chatsters = useSelector((state) => state.chatmembers);
+  const [remvoeuser, setRemoveuser] = useState();
 
   const addtochat = (id) => {
     addnewchat({ chatster: id }, (response) => {
@@ -103,10 +128,20 @@ function ChatList({ followers }) {
           type: 'chatmembers',
           payload: response.Chatsters,
         });
+        setRemoveuser(true);
       }
     });
   };
-
+  const findexistchatster = () => {
+    if (!chatsters) return false;
+    const status = chatsters.chatsters.find(
+      (user) => user.personid._id === followers._id,
+    );
+    if (status) return true;
+    return false;
+  };
+  if (findexistchatster()) return '';
+  if (remvoeuser) return '';
   return (
     <div className="Follower">
       <div>

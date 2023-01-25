@@ -3,6 +3,7 @@
     border-radius: 1rem;
     display: grid;
     grid-template-rows: 14vh 60vh 13vh;
+    overflow: auto;
 }
 
 .chat-header {
@@ -85,6 +86,10 @@
 .chat-header > div > div {
     display: flex;
     gap: 1rem;
+}
+
+.back-icon{
+  margin: 15px;
 }
 
 .start-chat{

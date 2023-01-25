@@ -21,7 +21,6 @@
     padding: 1rem;
     height: auto;
     min-height: 80vh;
-    overflow: scroll;
   }
   
   .Chat-list {
@@ -77,9 +76,6 @@
       grid-template-columns: auto;
       justify-content: center;
     }
-     .follower.conversation>div>.name{
-      display: none;
-     }
   }
 
   @media screen and (max-width: 340px) {
@@ -87,9 +83,6 @@
        grid-template-columns: 18rem;
        justify-content: center;
      }
-      .follower.conversation>div>.name{
-       display: none;
-      }
    }
   .chatloader{
     display: flex;

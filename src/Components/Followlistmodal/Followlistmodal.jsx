@@ -7,6 +7,7 @@ import ListItemText from '@mui/material/ListItemText';
 import ListItemAvatar from '@mui/material/ListItemAvatar';
 import Avatar from '@mui/material/Avatar';
 import { getFollowerList } from '../../Api/User.Api';
+import './Followlist.css';
 
 function FollowerlistModal({ ModalOpened, setModalOpened }) {
   const theme = useMantineTheme();
