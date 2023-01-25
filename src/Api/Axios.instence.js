@@ -5,7 +5,7 @@ import axios from 'axios';
 axios.defaults.withCredentials = true;
 
 const instance = axios.create({
-  baseURL: 'http://localhost:5000',
+  baseURL: 'https://viable-world-react-server.onrender.com',
   headers: { 'X-Custom-Header': 'foobar' },
 });
 
