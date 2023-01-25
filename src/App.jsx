@@ -6,6 +6,7 @@ import Profile from './pages/Profile/Profile';
 import Home from './pages/home/Home';
 import Auth from './pages/Auth/Auth';
 import Chat from './pages/Chat/Chat';
+import Error from './Components/Error/Error';
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
             <Route path="/home" element={<Home />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/chat" element={<Chat />} />
+            <Route path="*" element={<Error />} />
           </Routes>
         </BrowserRouter>
       </div>
