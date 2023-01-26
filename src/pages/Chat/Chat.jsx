@@ -21,6 +21,11 @@ function arraysort(array, sorting, userid) {
       newarray.push(data);
     }
   });
+  let k = newarray.length;
+  while (array.length > sorting.length && array.length !== newarray.length) {
+    newarray.push(array[k]);
+    k += 1;
+  }
   return newarray;
 }
 function Chat() {
@@ -37,7 +42,7 @@ function Chat() {
 
   useEffect(() => {
     if (User) {
-      socket.current = io('http://localhost:8000');
+      socket.current = io(process.env.REACT_APP_SOCKET_URL);
       socket.current.emit('new-user-add', User._id);
       socket.current.on('get-users', (users) => {
         setOnlineusers(users);
@@ -67,7 +72,10 @@ function Chat() {
     allchatster((response) => {
       if (response.success) {
         // eslint-disable-next-line max-len
-        response.chatsteres.chatsters = arraysort(response.chatsteres.chatsters, response.order, response.user._id);
+        if (response.order.length > 0) {
+          // eslint-disable-next-line max-len
+          response.chatsteres.chatsters = arraysort(response.chatsteres.chatsters, response.order, response.user._id);
+        }
         dispatch({
           type: 'chatmembers',
           payload: response.chatsteres,

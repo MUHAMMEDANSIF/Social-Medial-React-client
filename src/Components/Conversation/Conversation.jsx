@@ -25,7 +25,7 @@ function Conversation({ setcurrentchat, onlineusers }) {
       {data.chatsters.map((element) => (
         <div key={element._id}>
           <div className="follower conversation">
-            <div onClick={() => setcurrentchat(element)}>
+            <div onClick={() => setcurrentchat(element.personid)}>
               {
                 findonlineusers(element)
                   ? <div className="online-dot" />
@@ -45,7 +45,14 @@ function Conversation({ setcurrentchat, onlineusers }) {
                 <span>
                   {element.personid ? element.personid.username : ''}
                 </span>
-                <span>Online</span>
+                <span>
+                  {
+                findonlineusers(element)
+                  ? 'Online'
+                  : 'Offline'
+              }
+
+                </span>
               </div>
             </div>
           </div>
