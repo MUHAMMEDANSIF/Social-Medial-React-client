@@ -7,6 +7,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import { format } from 'timeago.js';
 import Alert from '@mui/material/Alert';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import { useSelector, useDispatch } from 'react-redux';
 import { addnewmessage, getallmessage } from '../../Api/Chat.Api';
 
 function ChatBox({
@@ -18,6 +19,9 @@ function ChatBox({
   const [newMessage, setNewMessages] = useState('');
   const [chats, setChats] = useState(null);
   const [error, seterror] = useState(null);
+  const chatster = useSelector((state) => state.chatmembers);
+
+  const dispatch = useDispatch();
 
   const toastoptions = {
     position: 'bottom-left',
@@ -31,12 +35,24 @@ function ChatBox({
   const handlescroll = () => {
     messageEnd.current?.scrollIntoView({ behavior: 'smooth' });
   };
+  const sortchatsterlist = () => {
+    if (chats && chats.length > 0) {
+      const temp = chatster;
+      const index = chatster.findIndex((obj) => obj.chatId === currentchat.chatId);
+      temp.splice(index, 1);
+      dispatch({
+        type: 'chatmembers',
+        payload: [currentchat, ...temp],
+      });
+    }
+  };
   const handlesend = () => {
     if (newMessage.length > 0) {
       seterror(null);
       const data = {
+        chatId: currentchat.chatId,
         senderId: currentUser._id,
-        receiverid: currentchat._id,
+        receiverid: currentchat.personid._id,
         text: newMessage,
       };
       if (chats) setChats([...chats, data]);
@@ -46,6 +62,7 @@ function ChatBox({
       }, 100);
       addnewmessage(data, (response) => {
         if (response.success) {
+          sortchatsterlist();
           setSendmessages(data);
           setNewMessages('');
         } else {
@@ -72,7 +89,7 @@ function ChatBox({
       if (currentchat) {
         const data = {
           currentUser: currentUser._id,
-          currentchatster: currentchat._id,
+          currentchatster: currentchat.personid._id,
         };
         getallmessage(data, (response) => {
           if (response.success) {
@@ -97,6 +114,7 @@ function ChatBox({
   useEffect(() => {
     if (receviemessages) {
       setChats([...chats, receviemessages]);
+      sortchatsterlist();
     }
   }, [receviemessages]);
 
@@ -112,8 +130,8 @@ function ChatBox({
                 </div>
                 <img
                   src={
-                    currentchat.profile
-                      ? currentchat.profile.profileurl
+                    currentchat.personid.profile
+                      ? currentchat.personid.profile.profileurl
                       : process.env.REACT_APP_PROFILE_URL
                   }
                   alt=""
@@ -124,7 +142,7 @@ function ChatBox({
                   }}
                 />
                 <div className="name" style={{ fontSize: '0.8rem' }}>
-                  <span>{currentchat ? currentchat.username : ''}</span>
+                  <span>{currentchat ? currentchat.personid.username : ''}</span>
                   <span />
                 </div>
               </div>

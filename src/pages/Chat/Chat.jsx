@@ -12,16 +12,15 @@ import { allchatster } from '../../Api/Chat.Api';
 import NavBar from '../../Components/NavBar/NavBar';
 import Conversation from '../../Components/Conversation/Conversation';
 
-function arraysort(array, sorting, userid) {
+function arraysort(array, sorting) {
   const newarray = [];
   sorting.forEach((obj) => {
-    const id = obj._id.senderId === userid ? obj._id.receiverid : obj._id.senderId;
-    const data = array.find((element) => element.personid._id === id);
+    const data = array.find((element) => element.chatId === obj._id);
     if (data) {
       newarray.push(data);
     }
   });
-  let k = newarray.length;
+  let k = sorting.length - 1;
   while (array.length > sorting.length && array.length !== newarray.length) {
     newarray.push(array[k]);
     k += 1;
@@ -78,7 +77,7 @@ function Chat() {
         }
         dispatch({
           type: 'chatmembers',
-          payload: response.chatsteres,
+          payload: response.chatsteres.chatsters,
         });
         dispatch({
           type: 'user',

@@ -134,7 +134,7 @@ function ChatList({ followers }) {
   };
   const findexistchatster = () => {
     if (!chatsters) return false;
-    const status = chatsters.chatsters.find(
+    const status = chatsters.find(
       (user) => user.personid._id === followers._id,
     );
     if (status) return true;

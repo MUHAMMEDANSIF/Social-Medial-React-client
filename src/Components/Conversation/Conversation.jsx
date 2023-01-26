@@ -13,6 +13,10 @@ function Conversation({ setcurrentchat, onlineusers }) {
     return false;
   };
 
+  React.useEffect(() => {
+    console.log(data.chatsters);
+  }, [data.chatsters]);
+
   if (!data) {
     return (
       <div>
@@ -22,10 +26,10 @@ function Conversation({ setcurrentchat, onlineusers }) {
   }
   return (
     <>
-      {data.chatsters.map((element) => (
+      {data.map((element) => (
         <div key={element._id}>
           <div className="follower conversation">
-            <div onClick={() => setcurrentchat(element.personid)}>
+            <div onClick={() => setcurrentchat(element)}>
               {
                 findonlineusers(element)
                   ? <div className="online-dot" />
