@@ -10,10 +10,7 @@ const instance = axios.create({
 });
 
 instance.interceptors.response.use(
-  (response) => {
-    console.log(response);
-    return response.data;
-  },
+  (response) => response.data,
   async (error) => {
     const originalRequest = error.config;
     if (

@@ -36,8 +36,45 @@ function Chat() {
   const [onlineusers, setOnlineusers] = useState(null);
   const User = useSelector((state) => state.user);
   const chatsters = useSelector((state) => state.chatmembers);
+  const [screenWidth, setScreenWidth] = useState(window.innerWidth);
+  const [hide, setHide] = useState({
+    leftside: 'block',
+    rightside: 'block',
+  });
 
   const socket = useRef();
+
+  useEffect(() => {
+    function handleResize() {
+      setScreenWidth(window.innerWidth);
+    }
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  useEffect(() => {
+    if (screenWidth < 900) {
+      if (currentchat) {
+        setHide({ ...hide, leftside: 'none' });
+      } else {
+        setHide({ ...hide, rightside: 'none' });
+      }
+    }
+    if (screenWidth > 900) {
+      setHide({ leftside: 'block', rightside: 'block' });
+    }
+  }, [screenWidth]);
+
+  useEffect(() => {
+    if (screenWidth < 900) {
+      if (currentchat) {
+        setHide({ rightside: 'block', leftside: 'none' });
+      } else {
+        setHide({ rightside: 'none', leftside: 'block' });
+      }
+    }
+  }, [currentchat]);
 
   useEffect(() => {
     if (User) {
@@ -73,7 +110,11 @@ function Chat() {
         // eslint-disable-next-line max-len
         if (response.order.length > 0) {
           // eslint-disable-next-line max-len
-          response.chatsteres.chatsters = arraysort(response.chatsteres.chatsters, response.order, response.user._id);
+          response.chatsteres.chatsters = arraysort(
+            response.chatsteres.chatsters,
+            response.order,
+            response.user._id,
+          );
         }
         dispatch({
           type: 'chatmembers',
@@ -98,7 +139,7 @@ function Chat() {
     <>
       <NavBar />
       <div className="Chat">
-        <div className="Left-side-chat">
+        <div style={{ display: hide.leftside }} className="Left-side-chat">
           <div className="Chat-container">
             <h2>Chats</h2>
             <div className="Chat-list">
@@ -115,12 +156,14 @@ function Chat() {
             </div>
           </div>
         </div>
-        <div className="Right-side-chat">
+        <div style={{ display: hide.rightside, width: screenWidth > 900 ? 'auto' : screenWidth - 50 }} className="Right-side-chat">
           <ChatBox
             currentchat={currentchat}
             currentUser={User}
             setSendmessages={setSendmessages}
             receviemessages={receviemessages}
+            setcurrentchat={setcurrentchat}
+            screenWidth={screenWidth}
           />
         </div>
       </div>

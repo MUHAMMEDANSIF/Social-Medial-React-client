@@ -1,6 +1,6 @@
 /* eslint-disable no-underscore-dangle */
 import React, { useState, useEffect, useRef } from 'react';
-
+import { RiSendPlaneFill } from 'react-icons/ri';
 import './ChatBox.css';
 import InputEmoji from 'react-input-emoji';
 import { ToastContainer, toast } from 'react-toastify';
@@ -15,10 +15,13 @@ function ChatBox({
   currentchat,
   setSendmessages,
   receviemessages,
+  setcurrentchat,
+  screenWidth,
 }) {
   const [newMessage, setNewMessages] = useState('');
   const [chats, setChats] = useState(null);
   const [error, seterror] = useState(null);
+  const [inputlength, setinputlength] = useState(null);
   const chatster = useSelector((state) => state.chatmembers);
 
   const dispatch = useDispatch();
@@ -38,7 +41,9 @@ function ChatBox({
   const sortchatsterlist = () => {
     if (chats && chats.length > 0) {
       const temp = chatster;
-      const index = chatster.findIndex((obj) => obj.chatId === currentchat.chatId);
+      const index = chatster.findIndex(
+        (obj) => obj.chatId === currentchat.chatId,
+      );
       temp.splice(index, 1);
       dispatch({
         type: 'chatmembers',
@@ -55,8 +60,8 @@ function ChatBox({
         receiverid: currentchat.personid._id,
         text: newMessage,
       };
-      if (chats) setChats([...chats, data]);
-      else setChats([data]);
+      if (chats) setChats([...chats, { ...data, _id: Date.now() }]);
+      else setChats([{ ...data, _id: Date.now() }]);
       setTimeout(() => {
         handlescroll();
       }, 100);
@@ -76,7 +81,7 @@ function ChatBox({
       seterror('Please add somthing and try again');
       setTimeout(() => {
         seterror(null);
-      }, 1000);
+      }, 2000);
     }
   };
 
@@ -94,9 +99,9 @@ function ChatBox({
         getallmessage(data, (response) => {
           if (response.success) {
             setChats(response.message);
-            setTimeout(() => {
+            setImmediate(() => {
               handlescroll();
-            }, 100);
+            });
           } else if (response.error) {
             toast.error(response.error, toastoptions);
           } else {
@@ -113,8 +118,9 @@ function ChatBox({
 
   useEffect(() => {
     if (receviemessages) {
-      setChats([...chats, receviemessages]);
+      setChats([...chats, { ...receviemessages, _id: Date.now() }]);
       sortchatsterlist();
+      console.log(receviemessages);
     }
   }, [receviemessages]);
 
@@ -125,7 +131,10 @@ function ChatBox({
           <div className="chat-header">
             <div className="follower">
               <div>
-                <div className="back-icon">
+                <div
+                  className="back-icon"
+                  onClick={() => setcurrentchat(false)}
+                >
                   <ArrowBackIcon />
                 </div>
                 <img
@@ -142,7 +151,9 @@ function ChatBox({
                   }}
                 />
                 <div className="name" style={{ fontSize: '0.8rem' }}>
-                  <span>{currentchat ? currentchat.personid.username : ''}</span>
+                  <span>
+                    {currentchat ? currentchat.personid.username : ''}
+                  </span>
                   <span />
                 </div>
               </div>
@@ -172,14 +183,19 @@ function ChatBox({
                 </div>
               ))
               : ''}
-            <p style={{ padding: '2px' }} ref={messageEnd} />
             {error ? <Alert severity="error">{error}</Alert> : ''}
+            <p style={{ padding: '2px' }} ref={messageEnd} />
           </div>
           <div className="chat-sender">
             <div>+</div>
-            <InputEmoji value={newMessage} onChange={(e) => handlechange(e)} />
+            <InputEmoji
+              onResize={(e) => setinputlength(e.width / 8)}
+              maxLength={inputlength}
+              value={newMessage}
+              onChange={(e) => handlechange(e)}
+            />
             <div className="send-button button" onClick={handlesend}>
-              Send
+              {screenWidth > 900 ? 'send' : <RiSendPlaneFill />}
             </div>
           </div>
         </>
