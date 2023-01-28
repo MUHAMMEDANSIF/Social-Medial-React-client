@@ -126,7 +126,7 @@ function ChatList({ followers }) {
       if (response.success) {
         dispatch({
           type: 'chatmembers',
-          payload: response.Chatsters,
+          payload: response.Chatsters.chatsters,
         });
         setRemoveuser(true);
       }

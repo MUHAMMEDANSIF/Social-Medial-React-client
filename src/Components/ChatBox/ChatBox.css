@@ -3,7 +3,7 @@
     border-radius: 1rem;
     display: grid;
     grid-template-rows: 14vh 60vh 13vh;
-    overflow: auto;
+    height: 80vh;
 }
 
 .chat-header {

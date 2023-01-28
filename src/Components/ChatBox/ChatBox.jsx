@@ -172,7 +172,7 @@ function ChatBox({
                 </div>
               ))
               : ''}
-            <div style={{ padding: '2px' }} ref={messageEnd} />
+            <p style={{ padding: '2px' }} ref={messageEnd} />
             {error ? <Alert severity="error">{error}</Alert> : ''}
           </div>
           <div className="chat-sender">
