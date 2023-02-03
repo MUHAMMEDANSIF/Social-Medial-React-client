@@ -11,7 +11,10 @@ import MailIcon from '@mui/icons-material/Mail';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import MoreIcon from '@mui/icons-material/MoreVert';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import LogoutIcon from '@mui/icons-material/Logout';
 import SearchBox from '../SearchBox/SearchBox';
+import axios from '../../Api/Axios.instence';
 
 function NavBar() {
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
@@ -33,6 +36,22 @@ function NavBar() {
 
   const handleMobileMenuOpen = (event) => {
     setMobileMoreAnchorEl(event.currentTarget);
+  };
+
+  const toastoptions = {
+    position: 'bottom-left',
+    autoClose: 5000,
+    pauseOnHover: true,
+    draggable: true,
+  };
+
+  const Logout = async () => {
+    const response = await axios.get('/auth/Logout', { withCredentials: true });
+    if (response.success) {
+      navigate('/');
+    } else {
+      toast.error('some network error find please try agin', toastoptions);
+    }
   };
 
   const mobileMenuId = 'primary-search-account-menu-mobile';
@@ -83,6 +102,18 @@ function NavBar() {
           <AccountCircle />
         </IconButton>
         <p>Profile</p>
+      </MenuItem>
+      <MenuItem onClick={Logout}>
+        <IconButton
+          size="large"
+          aria-label="account of current user"
+          aria-controls="primary-search-account-menu"
+          aria-haspopup="true"
+          color="inherit"
+        >
+          <LogoutIcon />
+        </IconButton>
+        <p>Logout</p>
       </MenuItem>
     </Menu>
   );

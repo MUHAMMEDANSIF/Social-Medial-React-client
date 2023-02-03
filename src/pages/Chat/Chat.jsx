@@ -20,7 +20,7 @@ function arraysort(array, sorting) {
       newarray.push(data);
     }
   });
-  let k = sorting.length;
+  let k = sorting.length - 1;
   while (array.length > sorting.length && array.length !== newarray.length) {
     newarray.push(array[k]);
     k += 1;
@@ -113,7 +113,6 @@ function Chat() {
           response.chatsteres.chatsters = arraysort(
             response.chatsteres.chatsters,
             response.order,
-            response.user._id,
           );
         }
         dispatch({

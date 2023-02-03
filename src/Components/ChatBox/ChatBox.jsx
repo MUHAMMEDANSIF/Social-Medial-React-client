@@ -120,7 +120,7 @@ function ChatBox({
     if (receviemessages) {
       setChats([...chats, { ...receviemessages, _id: Date.now() }]);
       sortchatsterlist();
-      console.log(receviemessages);
+      handlescroll();
     }
   }, [receviemessages]);
 

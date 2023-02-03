@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import './ProfileCard.css';
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
@@ -12,6 +12,12 @@ import FollowerlistModal from '../Followlistmodal/Followlistmodal';
 function ProfileCard({ Postscount, ProfilePage }) {
   const [ModalOpened, setModalOpened] = useState(false);
   const [followModal, setFollowModal] = useState(false);
+  const [counts, setCounts] = useState({
+    followers: 0,
+    following: 0,
+    Postscount: 0,
+    profileurl: null,
+  });
 
   const User = useSelector((state) => state.user);
   const profileref = useRef();
@@ -31,6 +37,23 @@ function ProfileCard({ Postscount, ProfilePage }) {
       });
     }
   };
+
+  useEffect(() => {
+    if (User) {
+      const followers = User.followers.length > 0 ? User.followers.length : 0;
+      const following = User.following.length > 0 ? User.following.length : 0;
+      const postcount = Postscount || 0;
+      const profileurl = User.profile ? User.profile.profileurl : null;
+
+      setCounts({
+        followers,
+        following,
+        Postscount: postcount,
+        profileurl,
+      });
+    }
+  }, [User]);
+
   if (!User) return (<Loader />);
   return (
     <div className="ProfileCard">
@@ -39,8 +62,8 @@ function ProfileCard({ Postscount, ProfilePage }) {
         <img
           onClick={() => profileref.current.click()}
           src={
-                              User.profile
-                                ? User.profile.profileurl
+                              counts.profileurl
+                                ? counts.profileurl
                                 : process.env.REACT_APP_PROFILE_URL
                          }
           alt=""
@@ -58,14 +81,14 @@ function ProfileCard({ Postscount, ProfilePage }) {
         <div>
           <div className="Follow">
             <span onClick={() => setFollowModal('followers')}>
-              {User.followers.length > 0 ? User.followers.length : 0}
+              {counts.followers}
             </span>
             <span>Followers</span>
           </div>
           <div className="vl" />
           <div className="Follow">
             <span onClick={() => setFollowModal('following')}>
-              {User.following.length > 0 ? User.following.length : 0}
+              {counts.following}
             </span>
             <span>Following</span>
           </div>

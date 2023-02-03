@@ -57,7 +57,7 @@ function CommentModal({ ModalOpened, setModalOpened }) {
   }, []);
 
   const handleSubmit = () => {
-    if (newcomment.length > 0) {
+    if (newcomment.length > 0 && newcomment !== '') {
       const data = {
         postid: ModalOpened._id,
         text: newcomment,

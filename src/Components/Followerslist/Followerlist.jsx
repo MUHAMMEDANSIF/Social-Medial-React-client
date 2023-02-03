@@ -1,11 +1,11 @@
 import * as React from 'react';
+import './Followlist.css';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import Divider from '@mui/material/Divider';
 import ListItemText from '@mui/material/ListItemText';
 import ListItemAvatar from '@mui/material/ListItemAvatar';
 import Avatar from '@mui/material/Avatar';
-import './Followlist.css';
 import { getFollowerList } from '../../Api/User.Api';
 
 export default function Followerlist() {
@@ -79,7 +79,7 @@ export default function Followerlist() {
                   }
             </List>
           )
-          : nofollow
+          : <span className="null-follow-list">{nofollow}</span>
 }
 
     </div>

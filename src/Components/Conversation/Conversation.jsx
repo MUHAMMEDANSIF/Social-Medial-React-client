@@ -12,10 +12,10 @@ function Conversation({ setcurrentchat, onlineusers }) {
     }
     return false;
   };
-
+  console.log(data);
   React.useEffect(() => {
-    console.log(data.chatsters);
-  }, [data.chatsters]);
+    console.log(data);
+  }, [data]);
 
   if (!data) {
     return (
